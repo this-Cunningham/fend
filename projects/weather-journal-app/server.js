@@ -26,3 +26,21 @@ const port = 8000; //what port we want to use 'localhost:8000'
 const server = app.listen(port, function(){
   console.log(`Server running on localhost:${port}`); //prints to terminal ''
 })
+
+// Callback to debug
+
+// Initialize all route with a callback function
+app.get('/all', function(req, res){
+  res.send(projectData)
+})
+// Callback function to complete GET '/all'
+
+
+// Post Route
+app.post('/journalData', function(req, res) {
+  projectData["temperature"] = `${req.body.main.temp - 273}˚C`;
+  projectData['date'] = req.body.date;
+  projectData['feelings'] = req.body.feelings;
+  console.log(projectData)
+
+})
