@@ -8,6 +8,7 @@ console.log(newDate);
 // Personal API Key for OpenWeatherMap API
 const apiKey = '&appid=874db85ace1bed141c3ff243ec81fa46';
 
+
 // const countryCode = document.getElementById('country').value || 'us';
 const baseURL = `http://api.openweathermap.org/data/2.5/weather?zip=`
 
@@ -17,23 +18,23 @@ document.getElementById('generate').addEventListener('click', generate);
 /* Function called by event listener */
 function generate (e) {
   const zipcode = document.querySelector('#zip').value;
-  const feelings = document.querySelector('#feelings');
+  const feelings = document.querySelector('#feelings').value;
   console.log(zipcode)
-  console.log(feelings.value) //must wait for click event to capture value of text field, otherwise value will be blank
-  getWeather(baseURL+zipcode+apiKey)
+  console.log(feelings) //must wait for click event to capture value of text field, otherwise value will be blank
+  getWeather(baseURL+zipcode+apiKey, feelings)
   .then(function(data){
     postData(data)
   })
   .then(updateUI)
 }
 /* Function to GET Web API Data*/
-const getWeather = async (url = '') => {
+const getWeather = async (url = '', feelings) => {
   const response = await fetch(url);
 
   try {
     const weatherData = await response.json();
     weatherData['date'] = newDate; //inserting Date into dataObject before POST
-    weatherData['feelings'] = feelings.value; //inserting feelings into dataObject before POST
+    weatherData['feelings'] = feelings; //inserting feelings into dataObject before POST
     console.log(weatherData);
     return weatherData;
 
